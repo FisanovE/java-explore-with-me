@@ -10,7 +10,6 @@
         <artifactId>stats_service</artifactId>
         <groupId>ru.practicum</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <dependencies>
