@@ -1,3 +1,4 @@
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -14,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class StatsClient extends BaseClient {
 
@@ -28,6 +30,7 @@ public class StatsClient extends BaseClient {
     }
 
     public ResponseEntity<Object> create(EndpointHit endpointHit) {
+        log.info("Send post: app: {} ip: {} uri: {}", endpointHit.getApp(), endpointHit.getIp(), endpointHit.getUri());
         return post("/hit", endpointHit);
     }
 
@@ -37,12 +40,14 @@ public class StatsClient extends BaseClient {
             parameters = Map.of("start", URLEncoder.encode(start, StandardCharsets.UTF_8),
                     "end", URLEncoder.encode(end, StandardCharsets.UTF_8),
                     "unique", unique);
+            log.info("Send get: start: {} end: {} unique: {}", start, end, unique);
             return get("/stats?start={start}&end={end}&unique={unique}", parameters);
         }
         parameters = Map.of("start", URLEncoder.encode(start, StandardCharsets.UTF_8),
                 "end", URLEncoder.encode(end, StandardCharsets.UTF_8),
                 "uris", String.join(",", uris),
                 "unique", unique);
+        log.info("Send get: start: {} end: {} unique: {} uris: {}", start, end, unique, uris);
         return get("/stats?start={start}&end={end}&unique={unique}&uris={uris}", parameters);
     }
 
