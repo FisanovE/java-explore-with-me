@@ -28,13 +28,13 @@ import static ru.practicum.ewm.Constants.DATA_PATTERN;
 @RequestMapping(path = "/admin/events")
 public class EventsControllerAdmin {
 
-    private final EventsServiceAdmin eventsServiceAdmin;
+    private final EventsService eventsService;
 
     @PatchMapping("/{eventId}")
     public EventFullDto updateEventAndStatus(@PathVariable long eventId,
                                              @RequestBody @Valid UpdateEventAdminRequest updateDto) {
         log.info("Update event {}", eventId);
-        return eventsServiceAdmin.updateEventAndStatus(eventId, updateDto);
+        return eventsService.updateEventAndStatus(eventId, updateDto);
     }
 
     @GetMapping
@@ -47,6 +47,6 @@ public class EventsControllerAdmin {
                                             @RequestParam(defaultValue = "10", required = false) int size) {
         log.info("Get events by Param users {} states {} categories {} start {} end {} from {} size {}", users, states,
                 categories, rangeStart, rangeEnd, from, size);
-        return eventsServiceAdmin.getAllByParam(users, states, categories, rangeStart, rangeEnd, from, size);
+        return eventsService.getAllByParam(users, states, categories, rangeStart, rangeEnd, from, size);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewm.admin_api.categories.CategoriesService;
 import ru.practicum.ewm.admin_api.categories.model.CategoryDto;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping(path = "/categories")
-public class CategoriesController {
+public class CategoriesControllerPublic {
 
     private final CategoriesService categoriesService;
 

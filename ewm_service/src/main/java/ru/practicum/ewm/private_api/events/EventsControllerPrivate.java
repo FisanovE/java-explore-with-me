@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewm.admin_api.events.EventsServiceAdmin;
+import ru.practicum.ewm.admin_api.events.EventsService;
 import ru.practicum.ewm.admin_api.events.model.EventFullDto;
 import ru.practicum.ewm.admin_api.events.model.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.admin_api.events.model.EventRequestStatusUpdateResult;
@@ -30,9 +30,9 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping(path = "/users/{userId}/events")
-public class EventsController {
+public class EventsControllerPrivate {
 
-    private final EventsServiceAdmin eventsService;
+    private final EventsService eventsService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping

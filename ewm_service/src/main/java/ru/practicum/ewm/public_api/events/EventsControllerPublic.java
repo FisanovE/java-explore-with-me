@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewm.admin_api.events.EventsServiceAdmin;
+import ru.practicum.ewm.admin_api.events.EventsService;
 import ru.practicum.ewm.admin_api.events.model.EventFullDto;
 import ru.practicum.ewm.admin_api.events.model.EventShortDto;
 import ru.practicum.ewm.admin_api.events.model.enums.SortValues;
@@ -29,7 +29,7 @@ import static ru.practicum.ewm.Constants.DATA_PATTERN;
 @RequestMapping(path = "/events")
 public class EventsControllerPublic {
 
-    private final EventsServiceAdmin eventsServicePublic;
+    private final EventsService eventsService;
 
     @GetMapping
     public List<EventShortDto> getAllByFilter(HttpServletRequest request,
@@ -44,13 +44,13 @@ public class EventsControllerPublic {
                                               @RequestParam(defaultValue = "10") @Positive int size) {
         log.info("Get events by Filter text {} categories {} paid {} start {} end {} onlyAvailable {} sort {} from {} " +
                 "size {}", text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
-        return eventsServicePublic.getAllByFilter(request, text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
+        return eventsService.getAllByFilter(request, text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
     }
 
     @GetMapping("/{eventId}")
     public EventFullDto getByIdOnlyPublic(@PathVariable long eventId, HttpServletRequest request) {
         log.info("Get Public event {} ", eventId);
-        return eventsServicePublic.getByIdOnlyPublic(request, eventId);
+        return eventsService.getByIdOnlyPublic(request, eventId);
     }
 
 }

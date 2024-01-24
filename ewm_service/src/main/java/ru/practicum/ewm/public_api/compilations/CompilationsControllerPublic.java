@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewm.admin_api.compilations.CompilationsService;
 import ru.practicum.ewm.admin_api.compilations.model.CompilationDto;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/compilations")
-public class CompilationsController {
+public class CompilationsControllerPublic {
 
     private final CompilationsService compilationsService;
 

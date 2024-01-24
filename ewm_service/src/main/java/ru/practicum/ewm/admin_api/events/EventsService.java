@@ -47,7 +47,7 @@ import static ru.practicum.ewm.Constants.SORT_BY_VIEWS;
 
 @Service
 @RequiredArgsConstructor
-public class EventsServiceAdmin {
+public class EventsService {
     private final EventsRepository eventsRepository;
     private final EventsMapper eventsMapper;
     private final CategoriesRepository categoriesRepository;
@@ -298,7 +298,6 @@ public class EventsServiceAdmin {
         if (event.getState().equals(StateEvent.PUBLISHED)) {
             ResponseEntity<Object> response = statsClient.getAll(event.getPublishedOn(), LocalDateTime.now(),
                     List.of("/events/" + event.getId()), unique);
-//            objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
             List<ViewStats> viewStatsList = objectMapper.convertValue(response.getBody(), new TypeReference<>() {
             });
             if (!viewStatsList.isEmpty() && viewStatsList.get(0).getHits() != null)

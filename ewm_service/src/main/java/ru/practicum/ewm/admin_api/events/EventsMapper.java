@@ -1,5 +1,6 @@
 package ru.practicum.ewm.admin_api.events;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.practicum.ewm.admin_api.categories.CategoriesMapper;
 import ru.practicum.ewm.admin_api.events.model.Event;
@@ -9,10 +10,11 @@ import ru.practicum.ewm.admin_api.events.model.NewEventDto;
 import ru.practicum.ewm.admin_api.users.UserMapper;
 
 @Component
+@RequiredArgsConstructor
 public class EventsMapper {
 
-    private final CategoriesMapper categoriesMapper = new CategoriesMapper();
-    private final UserMapper userMapper = new UserMapper();
+    private final CategoriesMapper categoriesMapper;
+    private final UserMapper userMapper;
 
     public Event toEvent(NewEventDto newEventDto) {
         Event event = new Event();

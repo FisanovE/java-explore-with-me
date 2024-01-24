@@ -29,14 +29,11 @@ public class Request {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private long id;
 
     @JsonFormat(pattern = DATA_PATTERN)
     private LocalDateTime created;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
 
     @Column(name = "requester_id")
     private long requester;
@@ -44,4 +41,7 @@ public class Request {
     @Enumerated(EnumType.STRING)
     private StatusRequest status;
 
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 }

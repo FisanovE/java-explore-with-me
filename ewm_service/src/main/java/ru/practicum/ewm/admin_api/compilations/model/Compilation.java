@@ -7,6 +7,7 @@ import ru.practicum.ewm.admin_api.events.model.Event;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,15 +26,16 @@ public class Compilation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private long id;
-
-    @ManyToMany
-    @JoinTable(name = "compilations_events",
-            joinColumns = @JoinColumn(name = "compilations_id"),
-            inverseJoinColumns = @JoinColumn(name = "events_id"))
-    private List<Event> events;
     private Boolean pinned = false;
 
     @Column(name = "title", nullable = false)
     private String title;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "compilations_events",
+            joinColumns = @JoinColumn(name = "compilations_id"),
+            inverseJoinColumns = @JoinColumn(name = "events_id"))
+    private List<Event> events;
 }

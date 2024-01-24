@@ -36,14 +36,11 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private long id;
 
     @Size(min = 20, max = 2000)
     private String annotation;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
 
     @Column(name = "confirmed_request")
     private int confirmedRequest;
@@ -59,14 +56,6 @@ public class Event {
     @JsonFormat(pattern = DATA_PATTERN)
     @Column(name = "event_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime eventDate;
-
-    @ManyToOne
-    @JoinColumn(name = "initiator_id")
-    private User initiator;
-
-    @NotNull
-    @Embedded
-    private Location location;
 
     @NotNull
     private Boolean paid = false;
@@ -87,4 +76,16 @@ public class Event {
     @Size(min = 3, max = 120)
     private String title;
     private int views;
+
+    @NotNull
+    @Embedded
+    private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "initiator_id")
+    private User initiator;
 }

@@ -24,27 +24,27 @@ import javax.validation.Valid;
 @RequestMapping(path = "/admin/categories")
 public class CategoriesControllerAdmin {
 
-    private final CategoriesServiceAdmin categoriesServiceAdmin;
+    private final CategoriesService categoriesService;
 
     @PostMapping
     public ResponseEntity<CategoryDto> create(@RequestBody @Valid NewCategoryDto newCategoryDto) {
         log.info("Create category");
         /*return ResponseEntity.status(HttpStatus.CREATED)
                 .body(categoriesServiceAdmin.create(newCategoryDto));*/
-        return new ResponseEntity<>(categoriesServiceAdmin.create(newCategoryDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(categoriesService.create(newCategoryDto), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{catId}")
     public ResponseEntity<CategoryDto> update(@PathVariable long catId,
                                               @RequestBody @Valid CategoryDto categoryDto) {
         log.info("Update category {}", catId);
-        return new ResponseEntity<>(categoriesServiceAdmin.update(catId, categoryDto), HttpStatus.OK);
+        return new ResponseEntity<>(categoriesService.update(catId, categoryDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{catId}")
     public ResponseEntity<Object> delete(@PathVariable long catId) {
         log.info("Delete category {}", catId);
-        categoriesServiceAdmin.delete(catId);
+        categoriesService.delete(catId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

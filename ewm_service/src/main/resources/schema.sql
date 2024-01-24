@@ -59,7 +59,7 @@ CONSTRAINT pk_compilations PRIMARY KEY (id)
 
 CREATE TABLE IF NOT EXISTS compilations_events (
 compilations_id BIGINT NOT NULL,
-events_id       BIGINT NOT NULL,
+events_id BIGINT NOT NULL,
 CONSTRAINT pk_compilations_events PRIMARY KEY (compilations_id, events_id),
 CONSTRAINT fk_compilations FOREIGN KEY (compilations_id) REFERENCES compilations (id) ON DELETE CASCADE,
 CONSTRAINT fk_events FOREIGN KEY (events_id) REFERENCES events (id) ON DELETE CASCADE
