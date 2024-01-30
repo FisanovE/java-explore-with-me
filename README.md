@@ -2,6 +2,8 @@
 
 ### Описание проекта
 
+---
+
 Разработка бэкенд-части для сервиса оценки фильмов пользователями и формирования рейтинга фильмов на их основе.
 Приложение представляет собой многомодульный проект maven, который собран и упакован в docker-контейнеры и готов для размещения в любой среде.
 
@@ -20,5 +22,109 @@ API основного сервиса состоит из трёх частей:
 
 ### Стек используемых технологий
 
+---
+
 Java 11, Spring Boot, Spring Data, Maven, Lombok, SLF4J, PostgreSQL, Docker, Git
 
+---
+
+<details>
+
+<summary>Эндпоинты для основных операций приложения.</summary>
+
+### main-service
+
+#### Admin API
+
+###### Categories
+- POST /admin/categories - добавление администратором новой категорию событий
+- GET /admin/categories/{catId} - получение администратором категории событий
+- DELETE /admin/categories/{catId} - удаление администратором категории событий по её ID
+- 
+###### Comments
+- PATCH /admin/comments/{commentId} - обновление администратором комментария по его ID
+- DELETE /admin/comments/{commentId} - удаление администратором комментария по его ID
+- GET /admin/comments - получение администратором списка комментариев по любым параметрам:
+  - text - текст для поиска в тексте комментария
+  - users - список id пользователей
+  - events - список id событий
+  - rangeStart - начало временного отрезка в формате yyyy-MM-dd HH:mm:ss
+  - rangeEnd - конец временного отрезка в формате yyyy-MM-dd HH:mm:ss
+  - onlyAvailable - только доступные события, т.е. у которых еще не исчерпан лимит участников (true/false)
+  - sort - способ сортировки комментариев (USER_ID, EVENT_ID)
+  - from - параметр для пагинации
+  - size - параметр для пагинации
+
+###### Compilations
+- POST /admin/compilations - добавление администратором подборки событий
+- PATCH /admin/compilations/{compId} - обновление администратором подборки событий
+- DELETE /admin/compilations/{compId} - удаление администратором подборки событий
+
+###### Events
+- PATCH /admin/events/{eventId} - измениние администратором события
+- GET /admin/events - получение администратором списка событий по любым параметрам:
+  - users - список id пользователей
+  - states - список статусов события (PENDING, PUBLISHED, CANCELED)
+  - categories - список id категорий событий
+  - rangeStart - начало временного отрезка в формате yyyy-MM-dd HH:mm:ss
+  - rangeEnd - конец временного отрезка в формате yyyy-MM-dd HH:mm:ss
+  - from - параметр для пагинации
+  - size - параметр для пагинации
+
+###### Users
+- POST /admin/users - добавление администратором пользователя
+- GET /admin/users - получение администратором списка всех пользователей
+- DELETE /admin/users/{userId} - удаление администратором пользователя
+
+#### Private API
+###### Comments
+- POST /users/{userId}/comments - добавление пользователем комментария к событию
+- PATCH /users/{userId}/comments/{commentId} - обновление пользователем комментария по его ID
+- DELETE /users/{userId}/comments/{commentId} - удаление пользователем комментария по его ID
+
+###### Events
+- POST /users/{userId}/events - добавление пользователем события
+- PATCH /users/{userId}/events/{eventId} - изменение пользователем событие
+- GET /users/{userId}/events/{eventId} - получение пользователем события по его ID
+- GET /users/{userId}/events - получение пользователем списка событий
+
+- PATCH /users/{userId}/events/{eventId}/requests - изменение пользователем статуса (подтверждение, отмена) заявок 
+поданых на участие в событии, опубликованном данным пользователем
+- GET /users/{userId}/events/{eventId}/requests - получение пользователем списка запросов на участие в событии, 
+опубликованном данным пользователем
+
+###### Requests
+- POST /users/{userId}/requests - добавление пользователем запроса на участие в событии
+- PATCH /users/{userId}/requests/{requestId}/cancel - отмена пользователем запроса на участие в событии
+- GET /users/{userId}/requests - получение пользователем списка запросов на участие в событии
+
+#### Public API
+###### Categories
+- GET /categories - получение пользователем списка всех категорий
+- GET /categories/{catId} - получение пользователем категории по её ID
+
+###### Comments
+- GET /comments/events/{eventId} - получение пользователем списка комментариев по ID события
+
+###### Compilations
+- GET /compilations - получение пользователем списка всех подборок событий
+- GET /compilations/{compId} - получение пользователем подборки событий по её ID
+
+###### Events
+- GET /events/{id} - получение пользователем события по его ID
+- GET /events - получение пользователем списка событий по любым параметрам:
+  - text - текст для поиска в названии и описании событий
+  - categories - список id категорий событий
+  - paid - только платные события (true/false)
+  - rangeStart - начало временного отрезка в формате yyyy-MM-dd HH:mm:ss
+  - rangeEnd - конец временного отрезка в формате yyyy-MM-dd HH:mm:ss
+  - onlyAvailable - только доступные события, т.е. у которых еще не исчерпан лимит участников (true/false)
+  - sort - способ сортировки событий (EVENT_DATE, VIEWS)
+  - from - параметр для пагинации
+  - size - параметр для пагинации
+
+### stats-service
+
+- GET /stats - Получение статистики по посещениям
+- POST /hit - Сохранение информации о том, что на uri конкретного сервиса был отправлен запрос пользователем
+</details>
