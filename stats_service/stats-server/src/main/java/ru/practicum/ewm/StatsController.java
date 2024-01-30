@@ -33,17 +33,13 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public List<ViewStats> getAll(@RequestParam String start, /*@DateTimeFormat(pattern = DATA_PATTERN) LocalDateTime start,*/
-                                  @RequestParam String end, /*@DateTimeFormat(pattern = DATA_PATTERN) LocalDateTime end,*/
+    public List<ViewStats> getAll(@RequestParam String start, @RequestParam String end,
                                   @RequestParam(required = false) List<String> uris,
                                   @RequestParam(defaultValue = "false", required = false) boolean unique) {
         log.info("Get all stats {} - {} _unique: {} _uris: {} ", LocalDateTime.parse(URLDecoder.decode(start, StandardCharsets.UTF_8), FORMATTER),
                 LocalDateTime.parse(URLDecoder.decode(end, StandardCharsets.UTF_8), FORMATTER), unique, uris);
         return statsService.getAll(LocalDateTime.parse(URLDecoder.decode(start, StandardCharsets.UTF_8), FORMATTER),
                 LocalDateTime.parse(URLDecoder.decode(end, StandardCharsets.UTF_8), FORMATTER), uris, unique);
-
-        /*log.info("Get all stats {} - {} _unique: {} _uris: {} ", start, end, unique, uris);
-        return statsService.getAll(start, end, uris, unique);*/
     }
 
 
